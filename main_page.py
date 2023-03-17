@@ -13,10 +13,10 @@ class Handler:
 
 
 builder = Gtk.Builder()
-builder.add_from_file("listeChambres.glade")
+builder.add_from_file("main_page.glade")
 builder.connect_signals(Handler())
 
-window = builder.get_object("windowChambres")
+window = builder.get_object("mainWindow")
 window.show_all()
 
 Gtk.main()
