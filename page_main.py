@@ -1,5 +1,5 @@
 import gi
-
+import requests
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GdkPixbuf, Gdk
@@ -21,6 +21,12 @@ class HotelMainPage(Gtk.Window):
         headerbar.pack_end(button)
         self.set_titlebar(headerbar)
 
+        # Ajout du bouton pour l'utilisateur
+        button = Gtk.Button(label="Utilisateur")
+        button.connect("clicked", self.user_button)
+        headerbar.pack_end(button)
+        self.set_titlebar(headerbar)
+
         # Ajout de l'image de fond
         image = Gtk.Image()
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("/Users/macbookair/Downloads/img_hotel.jpg", 1000, 1500, True)
@@ -31,6 +37,11 @@ class HotelMainPage(Gtk.Window):
     def admin_button(self, widget):
         self.hide()
         login_window = interface_admin()
+        login_window.show_all()
+
+    def user_button(self, widget):
+        self.hide()
+        login_window = interface_user()
         login_window.show_all()
 
 class interface_admin(Gtk.Window):
@@ -48,14 +59,20 @@ class interface_admin(Gtk.Window):
             grid.set_row_spacing(100)
             self.add(grid)
 
-            # Création de l'image à ajouter
-            # image = Gtk.Image.new_from_file("/Users/macbookair/Downloads/img_hotel.jpg")
-            # image.set_size_request(100, 100)
-            # Ajout de l'image au milieu de la grille
-            # grid.attach(image, 0, 0, 1, 1)
-
             label2 = Gtk.Label()
             grid.attach(label2, 0, 2, 1, 1)
+
+            menubar = Gtk.MenuBar()
+            menubar.set_hexpand(True)
+            grid.attach(menubar, 0, 0, 1, 1)
+
+            menuitem_file = Gtk.MenuItem(label="Accueil")
+            menubar.append(menuitem_file)
+            menuitem_file = Gtk.MenuItem(label="Les chambres")
+            menubar.append(menuitem_file)
+            menuitem_file = Gtk.MenuItem(label="les clients")
+            menubar.append(menuitem_file)
+
 
             # Bouton pour ajouter uner categorie
             self.button = Gtk.Button(label="Ajouter une categorie")
@@ -88,6 +105,25 @@ class interface_admin(Gtk.Window):
             self.hide()
             login_window = Room()
             login_window.show_all()
+
+
+class interface_user(Gtk.Window):
+    def __init__(self):
+        Gtk.Window.__init__(self, title="Interface user")
+        self.set_border_width(10)
+        headerbar = Gtk.HeaderBar()
+        headerbar.set_show_close_button(True)
+        headerbar.props.title = "SEN HOTEL"
+        headerbar.props.subtitle = "Interface utilisateur"
+        self.set_titlebar(headerbar)
+
+        grid = Gtk.Grid()
+        grid.set_column_spacing(100)
+        grid.set_row_spacing(100)
+        self.add(grid)
+
+        label2 = Gtk.Label()
+        grid.attach(label2, 0, 2, 1, 1)
 
 class Category(Gtk.Window):
         def __init__(self):
@@ -125,8 +161,29 @@ class Category(Gtk.Window):
 
                         # Ajouter un bouton pour valider
                         button = Gtk.Button(label="Ajouter")
-                        # button.connect("clicked", self.add_category)
+                        button.connect("clicked", self.on_button_clicked_category)
                         grid.attach(button, 0, 5, 2, 1)
+
+        def on_button_clicked_category(self, widget):
+            # Récupérer les valeurs saisies par l'utilisateur
+            NomCategorie = self.add_category.get_text()
+            Tarifs = int(self.add_tarif.get_text())
+
+            # Appeler l'API Go avec les données saisies
+            url = 'http://localhost:3000/createCategories'
+            data = {'NomCategorie': NomCategorie, 'Tarifs': Tarifs}
+            response = requests.post(url, data=data)
+
+            # Vérifier si l'appel a réussi et afficher un message de confirmation
+            if response.status_code == 200:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK,"Les données ont été enregistrées avec succès.")
+                dialog.run()
+                dialog.destroy()
+            else:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,"Une erreur s'est produite lors de l'enregistrement des données.")
+                dialog.run()
+                dialog.destroy()
+
 
 class Client(Gtk.Window):
         def __init__(self):
@@ -142,7 +199,7 @@ class Client(Gtk.Window):
                     etiquette.set_markup("<span foreground='#ffff78780000' font_desc='Times New Roman 20'>Ajouter un client</span>")
                     grid.attach(etiquette, 1, 1, 1, 1)
 
-                    label3 = Gtk.Label(label="Nom")
+                    label3 = Gtk.Label(label="Name")
                     grid.attach(label3, 0, 2, 1, 1)
                     rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
                     label3.override_background_color(Gtk.StateFlags.NORMAL, rgba)
@@ -162,20 +219,51 @@ class Client(Gtk.Window):
                     rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
                     self.add_prenom.override_background_color(Gtk.StateFlags.NORMAL, rgba)
 
-                    label5 = Gtk.Label(label="Date de naissance")
+                    label5 = Gtk.Label(label="Telephone")
                     grid.attach(label5, 0, 6, 1, 1)
                     rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
                     label5.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-                    # Ajouter bouton
-                    self.add_ddn = Gtk.Entry()
-                    grid.attach(self.add_ddn, 1, 6, 1, 1)
+                    # Ajouter bouton prenom
+                    self.add_telephone = Gtk.Entry()
+                    grid.attach(self.add_telephone, 1, 6, 1, 1)
                     rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                    self.add_ddn.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+                    self.add_telephone.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+
+                    # label5 = Gtk.Label(label="Date de naissance")
+                    # grid.attach(label5, 0, 6, 1, 1)
+                    # rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                    # label5.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+                    # # Ajouter bouton
+                    # self.add_ddn = Gtk.Entry()
+                    # grid.attach(self.add_ddn, 1, 6, 1, 1)
+                    # rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                    # self.add_ddn.override_background_color(Gtk.StateFlags.NORMAL, rgba)
 
                     # Ajouter un bouton pour valider
                     button = Gtk.Button(label="Ajouter")
-                    # button.connect("clicked", self.add_category)
+                    button.connect("clicked", self.on_button_clicked)
                     grid.attach(button, 0, 8, 2, 1)
+
+        def on_button_clicked(self, widget):
+            # Récupérer les valeurs saisies par l'utilisateur
+            Name = self.add_nom.get_text()
+            Prenom = self.add_prenom.get_text()
+            Telephone = int(self.add_telephone.get_text())
+
+            # Appeler l'API Go avec les données saisies
+            url = 'http://localhost:3000/createClients'
+            data = {'Name': Name, 'Prenom': Prenom, 'Telephone': Telephone}
+            response = requests.post(url, data=data)
+
+            # Vérifier si l'appel a réussi et afficher un message de confirmation
+            if response.status_code == 200:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK,"Les données ont été enregistrées avec succès.")
+                dialog.run()
+                dialog.destroy()
+            else:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,"Une erreur s'est produite lors de l'enregistrement des données.")
+                dialog.run()
+                dialog.destroy()
 
 class Room(Gtk.Window):
         def __init__(self):
@@ -253,8 +341,32 @@ class Room(Gtk.Window):
 
                 # Ajouter un bouton pour valider
                 button = Gtk.Button(label="Ajouter")
-                # button.connect("clicked", self.add_category)
+                button.connect("clicked", self.on_button_clicked_room)
                 grid.attach(button, 0, 16, 2, 1)
+
+        def on_button_clicked_room(self, widget):
+            # Récupérer les valeurs saisies par l'utilisateur
+            Description = self.add_description.get_text()
+            Capacites = int(self.add_capacite.get_text())
+            Services = self.add_service.get_text()
+            Surfaces = int(self.add_surface.get_text())
+            NbreLits = int(self.add_nb_lits.get_text())
+            EtatChambre = self.add_service.get_text()
+
+            # Appeler l'API Go avec les données saisies
+            url = 'http://localhost:3000/createCategories'
+            data = {'Description': Description, 'Capacites': Capacites, 'Services': Services, 'Surfaces': Surfaces, 'NbreLits': NbreLits, 'EtatChambre': EtatChambre}
+            response = requests.post(url, data=data)
+
+            # Vérifier si l'appel a réussi et afficher un message de confirmation
+            if response.status_code == 200:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK,"Les données ont été enregistrées avec succès.")
+                dialog.run()
+                dialog.destroy()
+            else:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,"Une erreur s'est produite lors de l'enregistrement des données.")
+                dialog.run()
+                dialog.destroy()
         pass
 
 if __name__ == "__main__":
