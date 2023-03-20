@@ -125,6 +125,8 @@ class interface_user(Gtk.Window):
         label2 = Gtk.Label()
         grid.attach(label2, 0, 2, 1, 1)
 
+
+
 class Category(Gtk.Window):
         def __init__(self):
                         Gtk.Window.__init__(self, title="Ajouter une categorie")
@@ -199,7 +201,7 @@ class Client(Gtk.Window):
                     etiquette.set_markup("<span foreground='#ffff78780000' font_desc='Times New Roman 20'>Ajouter un client</span>")
                     grid.attach(etiquette, 1, 1, 1, 1)
 
-                    label3 = Gtk.Label(label="Name")
+                    label3 = Gtk.Label(label="Nom")
                     grid.attach(label3, 0, 2, 1, 1)
                     rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
                     label3.override_background_color(Gtk.StateFlags.NORMAL, rgba)
@@ -279,65 +281,69 @@ class Room(Gtk.Window):
                 etiquette.set_markup("<span foreground='#ffff78780000' font_desc='Times New Roman 20'>Ajouter une chambre</span>")
                 grid.attach(etiquette, 1, 1, 1, 1)
 
-                label5 = Gtk.Label(label="Description")
-                grid.attach(label5, 0, 2, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                label5.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-                # Ajouter bouton nom
-                self.add_description = Gtk.Entry()
-                grid.attach(self.add_description, 1, 2, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                self.add_description.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-
-                label6 = Gtk.Label(label="Capacite")
-                grid.attach(label6, 0, 4, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                label6.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-                # Ajouter bouton numero
-                self.add_capacite = Gtk.Entry()
-                grid.attach(self.add_capacite, 1, 4, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                self.add_capacite.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-
-                label7 = Gtk.Label(label="Service")
-                grid.attach(label7, 0, 6, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                label7.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-                # Ajouter bouton numero
-                self.add_service = Gtk.Entry()
-                grid.attach(self.add_service, 1, 6, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                self.add_service.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-
-                label8 = Gtk.Label(label="Surface")
-                grid.attach(label8, 0, 8, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                label8.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-                # Ajouter bouton numero
-                self.add_surface = Gtk.Entry()
-                grid.attach(self.add_surface, 1, 8, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                self.add_surface.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-
-                label9 = Gtk.Label(label="Nombre de lits")
-                grid.attach(label9, 0, 10, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                label9.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-                # Ajouter bouton numero
-                self.add_nb_lits = Gtk.Entry()
-                grid.attach(self.add_nb_lits, 1, 10, 1, 1)
-                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
-                self.add_nb_lits.override_background_color(Gtk.StateFlags.NORMAL, rgba)
-
                 label10 = Gtk.Label(label="Etat de la chambre")
-                grid.attach(label10, 0, 12, 1, 1)
+                grid.attach(label10, 0, 2, 1, 1)
                 rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
                 label10.override_background_color(Gtk.StateFlags.NORMAL, rgba)
                 # Ajouter bouton numero
                 self.add_etat_chambre = Gtk.Entry()
-                grid.attach(self.add_etat_chambre, 1, 12, 1, 1)
+                grid.attach(self.add_etat_chambre, 1, 2, 1, 1)
                 rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
                 self.add_etat_chambre.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+
+                label9 = Gtk.Label(label="Nombre de lits")
+                grid.attach(label9, 0, 4, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                label9.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+                # Ajouter bouton numero
+                self.add_nb_lits = Gtk.Entry()
+                grid.attach(self.add_nb_lits, 1, 4, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                self.add_nb_lits.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+
+                label5 = Gtk.Label(label="Description")
+                grid.attach(label5, 0, 6, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                label5.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+                # Ajouter bouton nom
+                self.add_description = Gtk.Entry()
+                grid.attach(self.add_description, 1, 6, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                self.add_description.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+
+                label6 = Gtk.Label(label="Capacite")
+                grid.attach(label6, 0, 8, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                label6.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+                # Ajouter bouton numero
+                self.add_capacite = Gtk.Entry()
+                grid.attach(self.add_capacite, 1, 8, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                self.add_capacite.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+
+                label7 = Gtk.Label(label="Service")
+                grid.attach(label7, 0, 10, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                label7.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+                # Ajouter bouton numero
+                self.add_service = Gtk.Entry()
+                grid.attach(self.add_service, 1, 10, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                self.add_service.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+
+                label8 = Gtk.Label(label="Surface")
+                grid.attach(label8, 0, 12, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                label8.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+                # Ajouter bouton numero
+                self.add_surface = Gtk.Entry()
+                grid.attach(self.add_surface, 1, 12, 1, 1)
+                rgba = Gdk.RGBA.from_color(Gdk.color_parse("#ffffa3a34848"))
+                self.add_surface.override_background_color(Gtk.StateFlags.NORMAL, rgba)
+
+
+
+
 
                 # Ajouter un bouton pour valider
                 button = Gtk.Button(label="Ajouter")
@@ -346,16 +352,16 @@ class Room(Gtk.Window):
 
         def on_button_clicked_room(self, widget):
             # Récupérer les valeurs saisies par l'utilisateur
+            EtatChambre = self.add_etat_chambre.get_text()
+            NbreLits = int(self.add_nb_lits.get_text())
             Description = self.add_description.get_text()
             Capacites = int(self.add_capacite.get_text())
             Services = self.add_service.get_text()
             Surfaces = int(self.add_surface.get_text())
-            NbreLits = int(self.add_nb_lits.get_text())
-            EtatChambre = self.add_service.get_text()
 
             # Appeler l'API Go avec les données saisies
-            url = 'http://localhost:3000/createCategories'
-            data = {'Description': Description, 'Capacites': Capacites, 'Services': Services, 'Surfaces': Surfaces, 'NbreLits': NbreLits, 'EtatChambre': EtatChambre}
+            url = 'http://localhost:3000/createChambres'
+            data = {'EtatChambre': EtatChambre,'NbreLits': NbreLits, 'Description': Description, 'Capacites': Capacites, 'Services': Services, 'Surfaces': Surfaces}
             response = requests.post(url, data=data)
 
             # Vérifier si l'appel a réussi et afficher un message de confirmation
